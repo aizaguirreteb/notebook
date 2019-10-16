@@ -12,16 +12,19 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
 
     private var notes  = mutableListOf<Note>()
+    var listOfSavedNotes = mutableListOf<Note>()
     lateinit var editTextTitle : EditText
     lateinit var editTextBody : EditText
     lateinit var listViewNotes : ListView
     lateinit var adapter : ArrayAdapter<Note>
-
+    lateinit var notesDBHelper : NotesDBHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        notesDBHelper = NotesDBHelper(this)
 
         /**
          * We have to get the elements we need searching by id
@@ -36,26 +39,36 @@ class MainActivity : AppCompatActivity() {
 
         setListViewListeners()
 
+
+
     }
 
     private fun setListViewListeners() {
         listViewNotes.setOnItemClickListener { parent, view, position, id ->
-            val note = notes[position]
+            val notesSaved = notesDBHelper.readAllNotes()
+            val note = notesSaved[position]
             editTextTitle.setText(note.title)
             editTextBody.setText(note.text)
         }
 
         listViewNotes.setOnItemLongClickListener { parent, view, position, id ->
-            notes.removeAt(position)
+            val notesSaved = notesDBHelper.readAllNotes()
+            val note = notesSaved[position]
+            notesDBHelper.deleteNote(note.title)
+            //notes.removeAt(position)
             adapter.notifyDataSetChanged()
+            setAdapter()
+            Toast.makeText(this, "Note Deleted", Toast.LENGTH_LONG).show()
             true
         }
     }
 
     private fun setAdapter() {
+
+        val listOfSavedNotes = notesDBHelper.readAllNotes()
         adapter = ArrayAdapter<Note>(
             this, android.R.layout.simple_list_item_1,
-            notes
+            listOfSavedNotes
         )
 
 
@@ -80,12 +93,17 @@ class MainActivity : AppCompatActivity() {
              */
             val title = editTextTitle.text.toString()
             val body = editTextBody.text.toString()
-            val date = Date()
+            val date = Date().toString()
 
             val note = Note(title, body, date)
+            var result = notesDBHelper.insertNote(Note(title, body, date))
+            Toast.makeText(this, "Addin note " + result, Toast.LENGTH_LONG).show()
+            //Clear all edit text!!!!
+            //resetNoteViews()
 
-            notes.add(note)
+           // notes.add(note)
             adapter.notifyDataSetChanged()
+            setAdapter()
             resetNoteViews()
         } else {
 
