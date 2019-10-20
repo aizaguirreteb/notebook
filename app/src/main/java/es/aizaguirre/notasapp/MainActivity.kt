@@ -97,11 +97,10 @@ class MainActivity : AppCompatActivity() {
 
             val note = Note(title, body, date)
             var result = notesDBHelper.insertNote(Note(title, body, date))
-            Toast.makeText(this, "Addin note " + result, Toast.LENGTH_LONG).show()
-            //Clear all edit text!!!!
-            //resetNoteViews()
+            if(result) {
+                Toast.makeText(this, "Added note " + title, Toast.LENGTH_LONG).show()
+            }
 
-           // notes.add(note)
             adapter.notifyDataSetChanged()
             setAdapter()
             resetNoteViews()
@@ -111,6 +110,10 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
         }
 
+    }
+
+    fun clearNote(v: View){
+        resetNoteViews()
     }
 
     fun resetNoteViews(){

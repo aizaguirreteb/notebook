@@ -8,6 +8,16 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_title"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:layout_marginBottom="10dp"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimaryDark"/>
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,16 +34,33 @@
         android:layout_marginHorizontal="10dp"
         android:lines="5"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="right">
+
+        <Button
+            android:id="@+id/btnClear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:onClick="clearNote"
+            android:text="@string/btnClear"
+            android:background="@color/colorClear"
+            />
+
     <Button
         android:id="@+id/btnNewNote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginRight="10dp"
+        android:layout_marginHorizontal="10dp"
         android:onClick="addNote"
         android:text="@string/btnNewNote"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorSend"
         />
+
+    </LinearLayout>
 
     <ListView
         android:id="@+id/noteList"
@@ -41,5 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="10dp"/>
+
+
 
 </LinearLayout>

@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">notasApp</string>
+    <string name="app_title">MY NOTEBOOK</string>
     <string name="title">Write here your note title</string>
-    <string name="btnNewNote">Add Note</string>
+    <string name="btnNewNote">SAVE</string>
+    <string name="btnClear">CLEAR</string>
     <string name="emptyTitle">TITLE CANNOT BE EMPTY</string>
 </resources>
